@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+    <script th:inline="javascript">
+
+        window.onload = function () {
+            var message = [[${message}]];
+
+            switch (message) {
+                case 'Employee Added': {
+                    Swal.fire(
+                        'Employee Added Successfully!',
+                        '',
+                        'success'
+                    );
+                    break;
+                }
+                case 'Employee Updated': {
+                    Swal.fire(
+                        'Employee Updated Successfully!',
+                        '',
+                        'success'
+                    );
+                    break;
+                }
+                case 'Employee Deleted': {
+                    Swal.fire(
+                        'Employee Deleted Successfully!',
+                        '',
+                        'success'
+                    );
+                    break;
+                }
+                default:
+            }
+        };
+    </script>
+
+    <title>Home</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/employee/home}">
+        <img th:src="@{/employeelogo.png}" height="50px" width="80px" alt="Image"><b style="color: indigo">Employee Management System</b></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/employee/about}"><button class="btn btn-outline-danger">About</button></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/student/home}"><button class="btn btn-outline-success">Student</button></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container text-center">
+    <img th:src="@{/employees.png}" height="200px" width="500px" alt="Image">
+    <br>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add New Employee
+    </button>
+
+    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal1">Add User</button>
+
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal2">Show User</button>
+
+    <!--Modal For Add Employee-->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Employee Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/employee/saveEmployee}" method="post">
+                        <div class="container text-center">
+                            <img th:src="@{/addemployee.png}" height="120px" width="120px" alt="Image">
+                            <h2 style="color: blue" class="mt-2">Add New Employee Details</h2>
+                            <br>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required placeholder="Enter Name">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="mobile">Mobile</label>
+                                    <input type="number" class="form-control" id="mobile" name="mobile" required placeholder="Enter Mobile">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="designation">Designation</label>
+                                    <input type="text" class="form-control" id="designation" name="designation" required placeholder="Enter Designation">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required placeholder="Enter Email">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="hometown">Home town</label>
+                                    <input type="text" class="form-control" id="hometown" name="hometown" required placeholder="Enter Home Town">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="address">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address" required placeholder="Enter Address">
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                            <button type="submit" class="btn btn-outline-primary">Submit</button>
+                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal For Add User -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel2">Add New User</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/employee/saveUser}" method="post">
+                        <div class="container text-center">
+                            <h2 style="color: green" class="mt-2">Add New User</h2>
+                            <br>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" required placeholder="Enter Username">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required placeholder="Enter Password">
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-outline-primary">Submit</button>
+                                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Modal For Show User -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel3">Users Detail</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th hidden scope="col">Id</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Password</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="users :${user}">
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleUser" onclick="fetchUser(this.parentElement.nextElementSibling)">Edit</button>
+
+                                <!-- Button trigger Delete modal -->
+
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal1" onclick="setUserDeleteLink(this)">Delete</button>
+                                <a th:href="@{'/employee/delete/'+ ${users.userId}}" class="delete-link1" hidden></a>
+
+                            </td>
+                            <td hidden th:text="${users?.userId}">1</td>
+                            <td th:text="${users?.username}">admin</td>
+                            <td th:text="${users?.password}">pass</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="container mt-3" style="color: brown">List Of Employees</h3>
+<table class="table table-striped table-bordered" id="sortTable" border="1">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Action</th>
+        <th scope="col" hidden>Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Mobile</th>
+        <th scope="col">Designation</th>
+        <th scope="col">Email</th>
+        <th scope="col">Hometown</th>
+        <th scope="col">Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee: ${employees}">
+        <td>
+            <!-- Button trigger Update modal -->
+
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" onclick="fetchEmployeeData(this.parentElement.nextElementSibling)">Update</button>
+
+            <!-- Button trigger Delete modal -->
+
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" onclick="setDeleteLink(this)">Delete</button>
+            <a th:href="@{'/employee/deleteEmployee/'+ ${employee.id}}" class="delete-link" hidden></a>
+
+        </td>
+        <td hidden th:text="${employee.id}"></td>
+        <td th:text="${employee.name}"></td>
+        <td th:text="${employee.mobile}"></td>
+        <td th:text="${employee.designation}"></td>
+        <td th:text="${employee.email}"></td>
+        <td th:text="${employee.hometown}"></td>
+        <td th:text="${employee.address}"></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+<!--Modal For Update Employee-->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel1">Update Employee Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/employee/updateEmployee}" method="post">
+                    <div class="container text-center">
+                        <img th:src="@{/employeeupdate.png}" height="90px" width="220px" alt="Image">
+                        <h2 class="mt-2" style="color: brown">Update Existing Employee Details</h2>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="id" hidden>Id</label>
+                                <input type="text" class="form-control" id="id" name="id" hidden>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="name">Name</label>
+                                <input type="text" required class="form-control" id="update_name" name="name" placeholder="Enter Name">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="mobile">Mobile</label>
+                                <input type="number" required class="form-control" id="update_mobile" name="mobile" placeholder="Enter Mobile">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="designation">Designation</label>
+                                <input type="text" required class="form-control" id="update_designation" name="designation" placeholder="Enter Designation">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="email">Email</label>
+                                <input type="email" required class="form-control" id="update_email" name="email" placeholder="Enter Email">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="hometown">Hometown</label>
+                                <input type="text" required class="form-control" id="update_hometown" name="hometown" placeholder="Enter Hometown">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="address">Address</label>
+                                <input type="text" required class="form-control" id="update_address" name="address" placeholder="Enter Address">
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                        <button type="submit" class="btn btn-outline-primary">Update</button>
+                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal For Delete Confirmation -->
+
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this employee?
+            </div>
+               <div class="modal-footer d-flex justify-content-center">
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                   <a id="deleteEmployeeLink" class="btn btn-danger">Delete</a>
+               </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal For User Delete Confirmation -->
+
+<div class="modal fade" id="deleteConfirmationModal1" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel1">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this user?
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a id="deleteUserLink" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal For Edit User -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleUser" tabindex="-1" aria-labelledby="exampleModalLabelUser" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabelUser">Edit User</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/employee/updateUser}" method="post">
+                    <div class="container text-center">
+                        <h2 style="color: navy" class="mt-2">Edit User</h2>
+                        <br>
+                        <div class="row">
+                            <div class="form-group col-md-6" hidden>
+                                <label for="id">userId</label>
+                                <input type="text" class="form-control" id="uuserId" name="userId" required placeholder="Enter Username">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="edit_username" name="username" required placeholder="Enter Username">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="edit_password" name="password" required placeholder="Enter Password">
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-outline-primary">Update</button>
+                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--JS For Delete-->
+<script>
+    function setDeleteLink(buttonElement) {
+        var deleteEmployeeLink = document.getElementById('deleteEmployeeLink');
+        var linkElement = buttonElement.parentElement.querySelector('.delete-link');
+        var employeeId = linkElement.getAttribute('href');
+        deleteEmployeeLink.setAttribute('href', employeeId);
+    }
+</script>
+
+<!--JS For User Delete-->
+<script>
+    function setUserDeleteLink(buttonElement) {
+        var deleteUserLink = document.getElementById('deleteUserLink');
+        var linkElement = buttonElement.parentElement.querySelector('.delete-link1');
+        var userId = linkElement.getAttribute('href');
+        deleteUserLink.setAttribute('href', userId);
+    }
+</script>
+
+<!--JS For Fetch Employee Details -->
+<script>
+    function fetchEmployeeData(x){
+
+        var employeeId = x.textContent;
+        var employee;
+        var url = '/data/employeeData/'+employeeId;
+
+        var employeeIdForm = document.getElementById("id");
+        var employeeNameForm = document.getElementById("update_name");
+        var employeeMobile = document.getElementById("update_mobile");
+        var employeeDesignation = document.getElementById("update_designation");
+        var employeeEmail = document.getElementById("update_email");
+        var employeeHometown = document.getElementById("update_hometown");
+        var employeeAddress = document.getElementById("update_address");
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            employee = JSON.parse(this.responseText);
+            console.log(employee);
+
+            employeeIdForm.value = employee.id;
+            employeeNameForm.value = employee.name;
+            employeeMobile.value = employee.mobile;
+            employeeDesignation.value = employee.designation;
+            employeeEmail.value =  employee.email;
+            employeeHometown.value = employee.hometown;
+            employeeAddress.value = employee.address;
+
+        }
+        xhttp.open("GET", url, true);
+        xhttp.send();
+    }
+
+</script>
+
+<script>
+    function fetchUser(x){
+
+        var userId = x.textContent;
+        var user;
+        var url = '/data/userDetail/'+userId;
+
+        var userId = document.getElementById("uuserId");
+        var userName = document.getElementById("edit_username");
+        var password = document.getElementById("edit_password");
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function (){
+
+            user = JSON.parse(this.responseText);
+            console.log(user);
+
+            userId.value= user.userId;
+            userName.value = user.username;
+            password.value = user.password;
+        }
+
+        xhttp.open("GET",url,true);
+        xhttp.send();
+    }
+
+</script>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
